@@ -10,6 +10,8 @@ try
     var builder = WebApplication.CreateBuilder(args);
     builder.AddSerilog();
     Log.Information("Starting API");
+
+
     // Add services to the container.
     builder.Services.AddSingleton<ITaskService, TaskService>();
     builder.Services.AddControllers();
