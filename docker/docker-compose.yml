@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   elasticsearch:
@@ -24,7 +24,7 @@ services:
       timeout: 20s
       retries: 5     
     networks:
-      - elk_net
+      - elk_network
 
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:7.8.0
@@ -34,6 +34,7 @@ services:
       - elasticsearch.url=http://elasticsearch:9200
     depends_on:
       - elasticsearch
+      - logstash
     ports:
       - "5603:5601"
     healthcheck:
@@ -42,7 +43,7 @@ services:
       timeout: 20s
       retries: 5     
     networks:
-      - elk_net
+      - elk_network
 
   logstash:
     image: docker.elastic.co/logstash/logstash-oss:7.8.0
@@ -54,10 +55,10 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - elk_net 
+      - elk_network 
 
 volumes:
   elk_data:
 
 networks:
-  elk_net:
+  elk_network:
